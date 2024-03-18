@@ -38,7 +38,9 @@ function Login() {
             console.log(userId);
             setAuth({ email, accessToken, userId })
             toast.success("User Login Successfully !")
-            navigate(from, { replace: true })
+            setTimeout(() => {
+                navigate(from, { replace: true })                
+            }, 2000);
             // navigate("/")
             setUsername("")
             setPassword("")

@@ -214,7 +214,7 @@ function AddProfile() {
                                         />
                                     </div>
                                     <div className='flex justify-center items-center gap-3'>
-                                        <label className="" htmlFor='diseases'>Diseases : </label>
+                                        <label className="" htmlFor='diseases'>Medical History : </label>
                                         <input
                                             id='diseases'
                                             type="text"

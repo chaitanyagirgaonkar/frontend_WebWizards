@@ -22,7 +22,7 @@ function EditReport({ reportDetails, onCancelEdit, onUpdateReport }) {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             console.log(res.data.data);
-            toast.success('Note Edited Successfully !');
+            alert("Email Sent Successfully...!")
             // Update the report data in the parent component
             onUpdateReport(res.data.data);
             onCancelEdit(); // Close the edit form after successful edit

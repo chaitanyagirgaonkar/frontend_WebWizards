@@ -6,20 +6,20 @@ import { GrNotes } from "react-icons/gr";
 import { GoProjectSymlink } from "react-icons/go";
 import { TfiArrowCircleRight } from "react-icons/tfi";
 import useAuth from '../../hooks/useAuth';
-// import User from '../User/User';
+import User from '../User/User';
 import { FaRegUser } from "react-icons/fa6";
 import { FaFileMedical } from "react-icons/fa6";
 
 
 function SmSidebar() {
-    // const { sidebar, setSidebar, auth } = useAuth()
-    const { sidebar, setSidebar } = useAuth()
-    // const [profile, setProfile] = useState(false)
+    const { sidebar, setSidebar, auth } = useAuth()
+    // const { sidebar, setSidebar } = useAuth()
+    const [profile, setProfile] = useState(false)
 
-    // const handleProfile = () => {
-    //     const pro = !profile
-    //     setProfile(pro)
-    // }
+    const handleProfile = () => {
+        const pro = !profile
+        setProfile(pro)
+    }
 
     return (
 
@@ -84,7 +84,7 @@ function SmSidebar() {
                     </div> */}
                 </div>
             </ul>
-            {/* <div className='flex'>
+            <div className='flex'>
                 {
                     auth.accessToken &&
                     <div className='text-blue-500  cursor-pointer hover:bg-[#f5f5f5] rounded-lg flex justify-center items-center ml-1' onClick={handleProfile}>
@@ -97,7 +97,7 @@ function SmSidebar() {
                         <User />
                     </div>
                 }
-            </div> */}
+            </div>
         </div>
 
     )

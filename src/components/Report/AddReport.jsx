@@ -10,6 +10,7 @@ function AddReport({ onPdfAdded }) {
     const [description, setDescription] = useState("");
     const [reportDate, setReportDate] = useState("");
     const [pdfFile, setPdfFile] = useState(null);
+   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,8 +25,7 @@ function AddReport({ onPdfAdded }) {
                     headers: { "Content-Type": "multipart/form-data" }
                 })
             console.log(res)
-            toast.success("Note Added Successfully !", 2000)
-
+            alert("Report Added Successfully...!")
             setAddReport(prev => !prev)
             onPdfAdded(res.data.data)
 

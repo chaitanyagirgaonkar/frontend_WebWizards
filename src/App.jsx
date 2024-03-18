@@ -10,13 +10,13 @@ import Login from './components/Login.jsx'
 import Profile from './components/Profile/Profile.jsx'
 import Report from './components/Report/Report.jsx'
 import RequireAuth from './components/RequireAuth.jsx'
-// import PersistLogin from './components/PersistLogin.jsx'
+import PersistLogin from './components/PersistLogin.jsx'
 // import Dashboard from './components/Dashboard/Dashboard.jsx'
 // import UserPdf from './components/Dashboard/UserPdf.jsx'
 // import UserProject from "./components/Dashboard/UserProject.jsx"
 
 import HomePage from "../src/pages/HomePage.jsx"
-import Docter from './components/Docter.jsx'
+import Docter from './components/Docter/Docter.jsx'
 
 function App() {
 
@@ -26,13 +26,20 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/doctor/:reportId' element={<Docter />} />
+
+          <Route element={<PersistLogin />}>
           <Route path='/' element={<HomePage />} />
+          </Route>
+          
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route element={<RequireAuth />}>
-            <Route path="/container" element={<Container />}>
-              <Route path="report" element={<Report />} />
-              <Route path='profile' element={<Profile />} />
+
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth />}>
+              <Route path="/container" element={<Container />}>
+                <Route path="report" element={<Report />} />
+                <Route path='profile' element={<Profile />} />
+              </Route>
             </Route>
           </Route>
         </Routes>

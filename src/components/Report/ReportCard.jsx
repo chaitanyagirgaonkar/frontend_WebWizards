@@ -11,8 +11,9 @@ import SendEmail from './SendEmail';
 
 
 function ReportCard({ r, onEditPdf, onUpdateReport, onDeletePdf }) {
-    const { viewReport, setViewReport , setSendEmail , sendEmail } = useAuth()
+    const {  setSendEmail , sendEmail } = useAuth()
     const [isEditing, setIsEditing] = useState(false);
+    const [viewPdf, setViewPdf] = useState(false)
 
 
     const handleDelete = async (reportId) => {
@@ -39,14 +40,16 @@ function ReportCard({ r, onEditPdf, onUpdateReport, onDeletePdf }) {
     const handleCancelEdit = () => {
         setIsEditing(false);
     };
-
+    const handleViewNote = () => {
+        setViewPdf(false)
+    }
     return (
         <div className='flex rounded-md border p-2 pl-4 pr-4 w-[80%] justify-between'>
             <div><FaFilePdf size={30} className="text-red-600" /></div>
-            <div><h1 className='text-xl font-semibold'>{r.title}</h1></div>
+            <div><h1 className='text-xl font-semibold'>{r.title} <span className=' font-normal'>({r.reportType})</span></h1></div>
             <div className='flex gap-3 justify-center items-center'>
                 <FaEdit size={26} className="text-green-600 cursor-pointer" onClick={handleEditNote} />
-                <FaEye size={26} className="text-blue-600 cursor-pointer" onClick={() => setViewReport(prev => !prev)} />
+                <FaEye size={26} className="text-blue-600 cursor-pointer" onClick={() => setViewPdf(prev => !prev)}  />
                 <MdDeleteOutline size={26} className="text-red-600 cursor-pointer" onClick={() => handleDelete(r?._id)} />
                 {/* <FaRegShareSquare size={26} className="text-red-600 cursor-pointer" onClick={() => setSendEmail(prev => !prev)} /> */}
             </div>
@@ -54,8 +57,8 @@ function ReportCard({ r, onEditPdf, onUpdateReport, onDeletePdf }) {
                 <EditReport reportDetails={r} onCancelEdit={handleCancelEdit} onUpdateReport={onUpdateReport} />
             )}
             {
-                viewReport &&
-                <ViewReport reportId={r?._id} />
+                viewPdf  &&
+                <ViewReport reportId={r?._id} onHandleViewNote={handleViewNote}/>
             }
             {
                 sendEmail &&

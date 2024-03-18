@@ -5,18 +5,22 @@ import AddProfileCom from "./AddProfile";
 import useAuth from "../../hooks/useAuth.js"
 import axios from "axios"
 import EditProfile from "./EditProfile";
-
+import { jwtDecode } from "jwt-decode"
 function Profile() {
 
     const { editProfile, setEditProfile, profile, profileData, addProfile, setAddProfile, auth } = useAuth()
     const [data, setData] = useState({})
 
+    // const decoded = auth?.accessToken
+    //     ? jwtDecode(auth.accessToken)
+    //     : undefined
 
-
+    //     const email = decoded?.email || []
+    //     // console.log(email)
 
     useEffect(() => {
-        console.log(auth?.email)
-        axios.post("/v1/profile/getProfile", { email: auth?.email })
+  
+        axios.get("/v1/profile/getProfile")
             .then((res) => {
                 console.log(res.data);
                 setData(res.data.data)
@@ -63,6 +67,10 @@ function Profile() {
                                 <p className='font-semibold'>{data.mobileNum}</p>
                             </div>
                             <div className='flex gap-5'>
+                                <p>Email</p>
+                                <p className='font-semibold'>{data.email}</p>
+                            </div>
+                            <div className='flex gap-5'>
                                 <p>Sex</p>
                                 <p className='font-semibold'>{data.gender}</p>
                             </div>
@@ -101,7 +109,7 @@ function Profile() {
                                     <p className='font-bold'>{data.bloodGroup}</p>
                                 </div>
                                 <div>
-                                    <p>Disease</p>
+                                    <p>Medical History</p>
                                     <p className='font-bold'>{data.diseases}</p>
                                 </div>
                             </div>

@@ -6,7 +6,7 @@ import { GoProjectSymlink } from "react-icons/go";
 import { TfiArrowCircleRight, TfiArrowCircleLeft } from "react-icons/tfi";
 import { FaFileMedical } from "react-icons/fa6";
 import useAuth from '../../hooks/useAuth';
-// import User from '../User/User';
+import User from '../User/User';
 import { FaRegUser } from "react-icons/fa6";
 
 function Sidebar() {
@@ -68,9 +68,9 @@ function Sidebar() {
                         <div>Project</div>
                     </NavLink> */}
                 </ul>
-                {/* <div>
+                <div>
                     <User />
-                </div> */}
+                </div>
             </div>
 
 

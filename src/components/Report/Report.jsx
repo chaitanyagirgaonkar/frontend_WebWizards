@@ -5,10 +5,21 @@ import useAuth from '../../hooks/useAuth';
 import AddReport from './AddReport';
 import { FaRegShareSquare } from "react-icons/fa";
 import SendEmail from '../Report/SendEmail.jsx';
+import { jwtDecode } from "jwt-decode"
 
 function Report() {
+
+
     const { addReport, setAddReport, setSendEmail , sendEmail , auth} = useAuth();
     const [report, setReport] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('')
+    const [selectedDate, setSelectedDate] = useState('');
+
+    const decoded = auth?.accessToken
+        ? jwtDecode(auth.accessToken)
+        : undefined
+
+        const userId = decoded?._id 
 
     useEffect(() => {
         axios.get("/v1/report/getAllreports")
@@ -20,13 +31,19 @@ function Report() {
                 console.log(err);
             });
     }, []);
+    
+    const filteredProducts = report.filter(report =>
+        report.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (selectedDate ? report.reportType === selectedDate : true)
+    );
+
 
     const handlePdfAdded = (newPdf) => {
         setReport([...report, newPdf]);
     };
 
     const handleEditPdf = () => {
-        setReport(prevReport => prevReport.map(r => ({ ...r }))); // Forces a re-render
+        setReport(prevReport => prevReport.map(r => ({ ...r }))); 
     };
 
     const updateReport = (updatedReport) => {
@@ -42,15 +59,24 @@ function Report() {
         setReport(report.filter((r) => r._id !== reportId));
     }
 
+
     return (
         <div className='flex flex-col gap-5 rounded-lg bg-[#f5f5f5] p-5'>
             <div className='bg-white p-3 rounded-lg'>
                 <h1 className='text-blue-500 text-lg font-semibold'>Medical Report's</h1>
             </div>
-            <div className='bg-white p-3 rounded-lg flex justify-between items-center'>
+            <div className='bg-white p-3 rounded-lg flex justify-between items-center '>
                 <input type="text"
-                    className='w-1/2 border border-blue-500 p-1 rounded-md px-5'
-                    placeholder='Search..'
+                    className='w-1/3 border border-blue-500 p-1 rounded-md px-5'
+                    placeholder='Search with title..'
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />  
+                <input type="date"
+                    className='w-1/4 border border-blue-500 p-1 rounded-md px-5'
+                    placeholder='Filter with date..'
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
                 />  
 
                 <div className='flex gap-3'>
@@ -60,15 +86,18 @@ function Report() {
             </div>
 
             <div className='flex flex-col  gap-5 bg-white p-5 justify-center items-center rounded-lg'>
-                {report.map((r, index) => (
+                {filteredProducts.map((r, index) => (
                     <ReportCard key={index} r={r} onDeletePdf={handleDeletePdf} onEditPdf={handleEditPdf} onUpdateReport={updateReport} />
                 ))}
             </div>
 
-            {addReport && <AddReport onPdfAdded={handlePdfAdded} />}
+            {
+                addReport && 
+                <AddReport onPdfAdded={handlePdfAdded} />
+            }
             {
                 sendEmail &&
-                <SendEmail reportId = {auth?.userId} />
+                <SendEmail reportId = {userId} />
             }
         </div>
     );

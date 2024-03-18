@@ -3,8 +3,12 @@ import React, { useState } from 'react'
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom"
+import { FaStethoscope } from "react-icons/fa";
 import axios from "axios"
 import useAuth from "../../hooks/useAuth.js"
+import useLogout from "../../hooks/useLogout.js"
+import { jwtDecode } from "jwt-decode"
+import { FaUserCircle } from "react-icons/fa";
 
 const navItemInfo = [
     { name: 'Home', type: "link" },
@@ -74,6 +78,13 @@ const NavItems = ({ item }) => {
 
 const Header = () => {
     const { auth } = useAuth()
+    const logout = useLogout()
+
+    const decoded = auth?.accessToken
+        ? jwtDecode(auth.accessToken)
+        : undefined
+
+    const fullName = decoded?.fullName || "username"
 
     const [navIsVisible, setNavIsVisible] = useState(false);
 
@@ -88,7 +99,8 @@ const Header = () => {
             <header className='container mx-auto px-10 flex justify-between py-4 items-center'>
 
                 {/* logo  */}
-                <div className='w-40'>
+                <div className=' flex gap-3'>
+                    <FaStethoscope className="text-2xl text-blue-500 mt-1" />
                     <span className='text-2xl font-bold text-blue-600 font-roboto'>CareConnect</span>
                 </div>
 
@@ -111,16 +123,27 @@ const Header = () => {
                             ))
                         }
                     </ul>
+
+
+                </div>
+                <div className='flex gap-5'>
+                {
+                        auth?.accessToken
+                        &&
+                        <div className='flex my-auto gap-3'>
+                            <FaUserCircle size={32} className="text-blue-500" />
+                            <h1 className=' text-xl '>{fullName}</h1>
+                        </div>
+                    }
                     {
                         auth?.accessToken
                             ?
-                            <button className='mt-5 lg:mt-0 border-2 border-blue-500 px-6 py-2 text-blue-500 font-semibold hover:text-white hover:bg-blue-500 transition-all duration-300 rounded-full cursor-pointer' >Logout</button>
+                            <button className='mt-5 lg:mt-0 border-2 border-blue-500 px-6 py-2 text-blue-500 font-semibold hover:text-white hover:bg-blue-500 transition-all duration-300 rounded-full cursor-pointer' onClick={() => logout()}>Logout</button>
                             :
                             <button className='mt-5 lg:mt-0 border-2 border-blue-500 px-6 py-2 text-blue-500 font-semibold hover:text-white hover:bg-blue-500 transition-all duration-300 rounded-full cursor-pointer' ><Link to="/login">Login</Link></button>
                     }
-
+                    
                 </div>
-
 
             </header>
         </section>

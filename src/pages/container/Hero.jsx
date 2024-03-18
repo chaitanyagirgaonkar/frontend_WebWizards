@@ -25,7 +25,7 @@ export const Hero = () => {
           <button
             type="button"
             class="inline-flex items-center rounded-md bg-blue-500 px-3 py-2 text-lg font-semibold text-white hover:bg-black/80"
-            onClick={() => navigate("/container/report")}
+            onClick={() => navigate("/container/profile")}
           >
             Get Started
             <svg

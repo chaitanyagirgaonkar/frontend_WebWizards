@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { MdOutlineEmail } from "react-icons/md";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
  
@@ -9,7 +10,7 @@ const SendEmail = ( { reportId } ) => {
 
   const { setSendEmail } = useAuth();
   const [email , setEmail] = useState("");
-
+  console.log(reportId)
 
   const handleEmail = async () =>{
       
@@ -37,19 +38,20 @@ const SendEmail = ( { reportId } ) => {
             onClick={() => setSendEmail(false)}
           />
         </div>
+        <hr />
      
-      <div className="p-10 flex justify-between items-center">
-        <div className="">
-          <label className="" htmlFor="email">Email : </label>
+      <div className="p-16 flex flex-col gap-10 justify-between items-center">
+        <div className='flex flex-col justify-center mt-10  w-[90%]  '>
           <input
             id="email"
             type="email"
-            className="border border-gray-300 rounded-md px-2 py-1 focus:outline-none placeholder:text-sm placeholder:text-gray-400"
+            className=" pl-10 border border-gray-300 rounded-md px-2 py-1 focus:outline-none placeholder:text-sm placeholder:text-gray-400"
             placeholder="Enter Email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             required
           />
+          <MdOutlineEmail size={24} className='absolute text-blue-500 ml-2' />
         </div>
              <button className='bg-blue-500 px-6 py-2 rounded-lg shadow-lg text-white hover:bg-blue-700' onClick={handleEmail}>Send Email</button>
        </div>
