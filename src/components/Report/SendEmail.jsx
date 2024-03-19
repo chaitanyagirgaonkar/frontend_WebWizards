@@ -6,17 +6,18 @@ import axios from "axios";
  
 
 
-const SendEmail = ( { reportId } ) => {
+const SendEmail = ( { userId,reportId , handleSendEmail} ) => {
 
   const { setSendEmail } = useAuth();
+  
   const [email , setEmail] = useState("");
-  console.log(reportId)
+  // const [permission,setPermission] = useState("")
 
   const handleEmail = async () =>{
-      
-       try {
-            
-        const response = await axios.post(`/v1/report/email/${reportId}`, { to : email}) 
+    if(userId){
+      try {
+        console.log("user id : ",userId)
+        const response = await axios.post(`/v1/report/email/${userId}`, { to : email  }) 
 
         setSendEmail(prev => !prev)
 
@@ -25,6 +26,20 @@ const SendEmail = ( { reportId } ) => {
        } catch (error) {
           console.log(error);
        }
+    }else if(reportId){
+      try {
+        console.log("report id : " ,reportId)
+        const response = await axios.post(`/v1/report/email/report/${reportId}`, { to : email}) 
+
+        setSendEmail(prev => !prev)
+
+        alert("Email Sent Successfully...!")
+        
+       } catch (error) {
+          console.log(error);
+       }
+    }
+       
   }
 
   return (
@@ -35,7 +50,7 @@ const SendEmail = ( { reportId } ) => {
           <IoMdClose
             size={40}
             className="hover:bg-[#f5f5f5] cursor-pointer p-2 rounded-full"
-            onClick={() => setSendEmail(false)}
+            onClick={handleSendEmail}
           />
         </div>
         <hr />
@@ -53,6 +68,7 @@ const SendEmail = ( { reportId } ) => {
           />
           <MdOutlineEmail size={24} className='absolute text-blue-500 ml-2' />
         </div>
+          
              <button className='bg-blue-500 px-6 py-2 rounded-lg shadow-lg text-white hover:bg-blue-700' onClick={handleEmail}>Send Email</button>
        </div>
       </div>

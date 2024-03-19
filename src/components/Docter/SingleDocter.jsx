@@ -9,39 +9,35 @@ import ViewReport from '../Report/ViewReport.jsx'
 import useAuth from "../../hooks/useAuth.js";
 import DocterCard from "./DocterCard.jsx";
 
-const Docter = () => {
+const SingleDocter = () => {
 
-  const { userId } = useParams()
+  const { reportId } = useParams()
   const [data, setData] = useState({})
   const [report, setReport] = useState([])
-  // const { viewReport, setViewReport, editReport, setEditReport } = useAuth()
+  const { viewReport, setViewReport, editReport, setEditReport } = useAuth()
   // const [isEditing, setIsEditing] = useState(false);
 
 
   const handleEditPdf = () => {
-    setReport(prevReport => prevReport.map(r => ({ ...r }))); 
+    setReport(report); 
+    setEditReport(prev =>!prev)
   };
   useEffect(() => {
 
-    axios.get(`/v1/report/user/${userId}`)
+    axios.get(`/v1/report/report/${reportId}`)
       .then((response) => {
-        setData(response.data.data.userBelongingToReport[0])
-        console.log(response.data.data.patientReport);
-        // console.log(response.data.data);
-        setReport(response.data.data.patientReport)
+        setData(response.data.data.profile[0])
+        console.log(response.data.data.profile[0])
+        console.log(response.data.data.report);
+        setReport(response.data.data.report)
       })
       .catch((error) => console.log(error))
 
-  }, [])
+  }, [setReport,handleEditPdf])
 
   
   const updateReport = (updatedReport) => {
-    const updatedReportIndex = report.findIndex(r => r._id === updatedReport._id);
-    if (updatedReportIndex !== -1) {
-        const updatedReportList = [...report];
-        updatedReportList[updatedReportIndex] = updatedReport;
-        setReport(updatedReportList);
-    }
+    
 };
 
 
@@ -113,10 +109,9 @@ const Docter = () => {
 
       <div className=" rounded-md mt-3 bg-white w-[80%] p-5 flex justify-center flex-col gap-5 items-center">
         { 
-            report.map((r,index)=>
-            (
-              <DocterCard r={r} key={index} onEditPdf={handleEditPdf} onUpdateReport={updateReport}/>
-            ))
+            
+              <DocterCard r={report}  onEditPdf={handleEditPdf} onUpdateReport={updateReport}/>
+            
         }
       </div>
 
@@ -125,4 +120,4 @@ const Docter = () => {
   );
 };
 
-export default Docter;
+export default SingleDocter;

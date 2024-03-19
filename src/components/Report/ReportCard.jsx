@@ -11,9 +11,11 @@ import SendEmail from './SendEmail';
 
 
 function ReportCard({ r, onEditPdf, onUpdateReport, onDeletePdf }) {
-    const {  setSendEmail , sendEmail } = useAuth()
+    // const {  setSendEmail , sendEmail } = useAuth()
     const [isEditing, setIsEditing] = useState(false);
     const [viewPdf, setViewPdf] = useState(false)
+
+    const [sendEmail,setSendEmail] = useState(false)
 
 
     const handleDelete = async (reportId) => {
@@ -43,15 +45,20 @@ function ReportCard({ r, onEditPdf, onUpdateReport, onDeletePdf }) {
     const handleViewNote = () => {
         setViewPdf(false)
     }
+
+    const handleSendEmail = () =>{
+        setSendEmail(prev => !prev)
+    }
+
     return (
-        <div className='flex rounded-md border p-2 pl-4 pr-4 w-[80%] justify-between'>
+        <div className='flex rounded-md border p-2 pl-4 pr-4 w-[80%] justify-between shadow-md'>
             <div><FaFilePdf size={30} className="text-red-600" /></div>
             <div><h1 className='text-xl font-semibold'>{r.title} <span className=' font-normal'>({r.reportType})</span></h1></div>
             <div className='flex gap-3 justify-center items-center'>
                 <FaEdit size={26} className="text-green-600 cursor-pointer" onClick={handleEditNote} />
                 <FaEye size={26} className="text-blue-600 cursor-pointer" onClick={() => setViewPdf(prev => !prev)}  />
                 <MdDeleteOutline size={26} className="text-red-600 cursor-pointer" onClick={() => handleDelete(r?._id)} />
-                {/* <FaRegShareSquare size={26} className="text-red-600 cursor-pointer" onClick={() => setSendEmail(prev => !prev)} /> */}
+                <FaRegShareSquare size={26} className="text-black cursor-pointer" onClick={() => setSendEmail(prev => !prev)} />
             </div>
             {isEditing && (
                 <EditReport reportDetails={r} onCancelEdit={handleCancelEdit} onUpdateReport={onUpdateReport} />
@@ -62,7 +69,7 @@ function ReportCard({ r, onEditPdf, onUpdateReport, onDeletePdf }) {
             }
             {
                 sendEmail &&
-                <SendEmail reportId = {r?.owner} />
+                <SendEmail reportId = {r?._id} handleSendEmail={handleSendEmail}/>
             }
 
 

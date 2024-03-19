@@ -10,10 +10,12 @@ import { jwtDecode } from "jwt-decode"
 function Report() {
 
 
-    const { addReport, setAddReport, setSendEmail , sendEmail , auth} = useAuth();
+    // const { addReport, setAddReport, setSendEmail , sendEmail , auth} = useAuth();
+    const { addReport, setAddReport, auth} = useAuth();
     const [report, setReport] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedDate, setSelectedDate] = useState('');
+    const [sendEmail,setSendEmail] = useState(false) 
 
     const decoded = auth?.accessToken
         ? jwtDecode(auth.accessToken)
@@ -59,6 +61,9 @@ function Report() {
         setReport(report.filter((r) => r._id !== reportId));
     }
 
+    const handleSendEmail = () =>{
+        setSendEmail(prev => !prev)
+    }
 
     return (
         <div className='flex flex-col gap-5 rounded-lg bg-[#f5f5f5] p-5'>
@@ -97,7 +102,7 @@ function Report() {
             }
             {
                 sendEmail &&
-                <SendEmail reportId = {userId} />
+                <SendEmail userId = {userId} handleSendEmail={handleSendEmail}/>
             }
         </div>
     );

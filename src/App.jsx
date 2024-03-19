@@ -17,6 +17,7 @@ import PersistLogin from './components/PersistLogin.jsx'
 
 import HomePage from "../src/pages/HomePage.jsx"
 import Docter from './components/Docter/Docter.jsx'
+import SingleDocter from './components/Docter/SingleDocter.jsx'
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/doctor/:reportId' element={<Docter />} />
+          <Route path='/doctor/:userId' element={<Docter />} />
+          <Route path='/doctor/report/:reportId' element={<SingleDocter />} />
 
           <Route element={<PersistLogin />}>
           <Route path='/' element={<HomePage />} />
