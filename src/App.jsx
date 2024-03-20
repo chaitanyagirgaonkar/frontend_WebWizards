@@ -18,6 +18,8 @@ import PersistLogin from './components/PersistLogin.jsx'
 import HomePage from "../src/pages/HomePage.jsx"
 import Docter from './components/Docter/Docter.jsx'
 import SingleDocter from './components/Docter/SingleDocter.jsx'
+import Predis from './components/Predis/Predis.jsx'
+import Schedule from './components/Schedule/Schedule.jsx'
 
 function App() {
 
@@ -41,6 +43,8 @@ function App() {
               <Route path="/container" element={<Container />}>
                 <Route path="report" element={<Report />} />
                 <Route path='profile' element={<Profile />} />
+                <Route path='predis' element={<Predis />} />
+                <Route path='schedule' element={<Schedule />} />
               </Route>
             </Route>
           </Route>

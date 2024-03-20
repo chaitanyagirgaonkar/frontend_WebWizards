@@ -9,6 +9,8 @@ import useAuth from '../../hooks/useAuth';
 import User from '../User/User';
 import { FaRegUser } from "react-icons/fa6";
 import { FaFileMedical } from "react-icons/fa6";
+import { CiVirus } from "react-icons/ci";
+import { IoIosTimer } from "react-icons/io";
 
 
 function SmSidebar() {
@@ -70,18 +72,28 @@ function SmSidebar() {
 
                         </NavLink>
                     </div>
-                    {/* <div>
+                    <div>
                         <NavLink
-                            to={"/container/all-project"}
+                            to={"/container/predis"}
                             className={({ isActive }) => `${isActive && "text-blue-500 bg-[#f5f5f5]"} flex justify-center    hover:text-blue-500 " hover:bg-[#f5f5f5] cursor-pointer px-4 py-2 w-[100%]  font-semibold mt-1 rounded-lg`}
                         >
                             <div className=" flex  items-center ">
                                 {" "}
-                                <GoProjectSymlink size={22} className="" />
+                                <CiVirus size={22} className="" />
                             </div>
 
                         </NavLink>
-                    </div> */}
+                        <NavLink
+                            to={"/container/schedule"}
+                            className={({ isActive }) => `${isActive && "text-blue-500 bg-[#f5f5f5]"} flex justify-center    hover:text-blue-500 " hover:bg-[#f5f5f5] cursor-pointer px-4 py-2 w-[100%]  font-semibold mt-1 rounded-lg`}
+                        >
+                            <div className=" flex  items-center ">
+                                {" "}
+                                <IoIosTimer size={22} className="" />
+                            </div>
+
+                        </NavLink>
+                    </div>
                 </div>
             </ul>
             <div className='flex'>

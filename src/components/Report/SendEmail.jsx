@@ -18,7 +18,7 @@ const SendEmail = ( { userId,reportId , handleSendEmail} ) => {
       try {
         console.log("user id : ",userId)
         const response = await axios.post(`/v1/report/email/${userId}`, { to : email  }) 
-
+        console.log("tbhbhh j")
         setSendEmail(prev => !prev)
 
         alert("Email Sent Successfully...!")
